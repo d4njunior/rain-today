@@ -1,0 +1,74 @@
+<div class="h-screen {{ current?.is_day ? 'bg-medium' : 'bg-dark' }}">
+
+  <div *ngIf="!loaded" class="flex flex-col items-center pt-10">
+    <div *ngIf="!msg">
+      <div class="spinner mt-10"></div>
+    </div>
+    <div *ngIf="msg" class="flex flex-col items-center">
+      <p class="font-title font-bold text-white text-6xl">{{ msg?.status }}</p>
+      <p class="font-title font-bold text-white text-4xl">{{ msg?.statusText }}</p>
+      <p class="font-title font-regular text-white text-xl">{{ msg?.message }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="loaded" class="flex flex-col items-center w-screen h-auto" style="background-image: url( {{ current.icon }} ); background-size: cover; background-repeat: no-repeat; background-position-x: center;">
+    <div class="w-5/6 sm:w-3/5 lg:w-2/6">
+
+      <div class="flex flex-col items-center text-center bg-black rounded-lg pt-6 pb-5 px-14 mt-10 bg-opacity-20">
+        <p><button (click)="onRefresh()" class="text-white text-opacity-70 hover:text-dark focus:outline-none"><i class="fas fa-sync-alt"></i></button></p>
+        <p class="font-title font-medium text-white text-sm text-opacity-70">{{ current?.localTime | date:'mediumDate' }}</p>
+        <p class="font-title font-bold text-white text-2xl">{{ current?.name }}, {{ current?.country }}</p>
+        <p class="font-title font-bold text-white text-lg text-opacity-70">{{ current?.condition }}</p>
+        <h1 class="font-title text-10xl font-bold text-white">{{ current?.temp | number:'1.0-0' }}°</h1>
+        <p class="font-title font-medium text-white text-sm text-opacity-60">Feels like {{ current?.feels_like | number:'1.0-0' }}°</p>
+      </div>
+      <div class="grid grid-cols-3 align-middle mb-2 h-14">
+        <div class="flex justify-evenly items-center text-center bg-black bg-opacity-20 rounded-lg mt-1 mr-1">
+          <div>
+            <p class="text-white font-bold text-xl font-title uppercase text-opacity-60">{{ current?.mintemp | number:'1.0-0' }}
+              <i class="fas fa-temperature-low text-white text-opacity-60"></i></p>
+          </div>
+        </div>
+
+        <div class="flex justify-evenly items-center text-center bg-black bg-opacity-20 rounded-lg mt-1 mr-1">
+          <div>
+            <p class="text-white font-bold text-xl font-title uppercase text-opacity-60">{{ current?.maxtemp | number:'1.0-0' }}
+              <i class="fas fa-temperature-high text-white text-opacity-60"></i></p>
+          </div>
+        </div>
+
+        <div class="flex justify-evenly items-center text-center bg-black bg-opacity-20 rounded-lg mt-1">
+          <div>
+            <i class="fas fa-cloud-rain pr-2 text-white text-opacity-60"></i>
+          <span class="text-white font-bold text-xl font-title uppercase text-opacity-60">{{ current?.daily_chance_of_rain }}%</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center text-center bg-white rounded-lg p-4 my-1">
+        <p class="text-dark font-bold text-2xl font-title uppercase">{{ current?.will_it_rain ? current?.txt_rain : 'It will not rain' }}</p>
+      </div>
+      <div *ngIf="current?.will_it_rain">
+        <div class="flex justify-between">
+          <div *ngFor="let hour of current?.hour; index as i" class="flex flex-col items-center">
+              <div class="flex items-end h-full mt-4">
+                <div class="w-1.5 bg-white rounded-lg" style="height: {{hour?.precip * 10}}em;"></div>
+              </div>
+              <div>
+                <p class="font-bold text-black text-opacity-50 text-sm tracking-tighter mb-1 mt-1">{{ i }}</p>
+              </div>
+          </div>
+        </div>
+        <div class="flex justify-center text-center">
+          <p class="text-black font-bold text-sm text-opacity-50 font-title uppercase">amount of rainfall per hour</p>
+        </div>
+      </div>
+      <div class="flex justify-center mt-10">
+        <p class="font-title text-sm text-black text-opacity-30 tracking-wider">Powered by <a href="https://www.weatherapi.com/" target="_blank" title="Free Weather API">WeatherAPI.com</a></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
