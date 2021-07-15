@@ -33,7 +33,7 @@ git clone https://github.com/d4njunior/rain-today
 npm i
 
 # To setup the environment API key
-got to www.weatherapi.com to get one and change the environment file
+go to www.weatherapi.com to get one and change the environment file
 
 # To run the app
 ng serve --open
